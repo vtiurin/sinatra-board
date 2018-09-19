@@ -35,7 +35,8 @@ post '/new' do
   post_content = params[:content]
   # current_date =  datetime('now', 'localtime')
   if post_content.strip.empty?
-    return erb 'Enter your post'
+    @error = 'Enter post text'
+    return erb :new
   end
   @db.execute "INSERT INTO Posts (created_date, content) VALUES (datetime('now', 'localtime'), ?)", [post_content]
   erb post_content
