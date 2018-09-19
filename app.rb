@@ -9,3 +9,7 @@ end
 get '/new' do
   erb :new
 end
+
+post '/new' do
+  erb params[:content]
+end
