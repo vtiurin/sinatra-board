@@ -12,6 +12,17 @@ before '/new' do
   init_db
 end
 
+configure do
+  init_db
+  @db.execute 'CREATE TABLE IF NOT EXISTS Posts
+  (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_date DATE,
+    content TEXT
+  )'
+  @db.close
+end
+
 get '/' do
   erb 'hi'
 end
@@ -21,5 +32,11 @@ get '/new' do
 end
 
 post '/new' do
-  erb params[:content]
+  post_content = params[:content]
+  # current_date =  datetime('now', 'localtime')
+  if post_content.strip.empty?
+    return erb 'Enter your post'
+  end
+  @db.execute "INSERT INTO Posts (created_date, content) VALUES (datetime('now', 'localtime'), ?)", [post_content]
+  erb post_content
 end
