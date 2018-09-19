@@ -1,0 +1,9 @@
+<h1>Latest posts:</h1>
+<% @posts.each do |post| %>
+    <p style="font-size: 75%">
+        <a href="/post/<%= post['id']%>%">
+            <%= post['created_date'] %>
+        </a>
+    </p>
+<p><%= post['content'] %></p>
+<% end%>

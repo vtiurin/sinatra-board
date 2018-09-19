@@ -33,12 +33,13 @@
 			</nav>
 
 			<div>
+			<br>
 				<%if @error then %>
 						<div class="alert alert-danger"><%=@error%></div>
 				<% end %>
 				<%= yield %>
 			</div>
-
+			<br>
 		</div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

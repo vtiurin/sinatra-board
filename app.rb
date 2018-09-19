@@ -8,7 +8,7 @@ def init_db
   @db.results_as_hash = true
 end
 
-before '/new' do
+before '/' do
   init_db
 end
 
@@ -24,7 +24,9 @@ configure do
 end
 
 get '/' do
-  erb 'hi'
+  @posts = @db.execute 'select * from Posts order by created_date desc'
+  @db.close
+  erb :index
 end
 
 get '/new' do
@@ -33,11 +35,11 @@ end
 
 post '/new' do
   post_content = params[:content]
-  # current_date =  datetime('now', 'localtime')
   if post_content.strip.empty?
     @error = 'Enter post text'
     return erb :new
   end
   @db.execute "INSERT INTO Posts (created_date, content) VALUES (datetime('now', 'localtime'), ?)", [post_content]
+  @bdb.close
   erb post_content
 end
