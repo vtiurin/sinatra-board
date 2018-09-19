@@ -8,9 +8,10 @@
     <p style="font-size: 75%">Added at <%= comment['created_date'] %></p>
     <hr>                           
 <% end %>
+<h2>Add New Commentary:</h2>
 <form action="/details/<%= @post['id'] %>" method="post">
     <div class="form-group">
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="content" placeholder="Type post text here..."></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="content" placeholder="Type commentary text here..."></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

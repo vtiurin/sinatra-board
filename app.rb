@@ -51,18 +51,31 @@ post '/new' do
   redirect to '/'
 end
 
-get '/details/:post_id' do
+before '/details/:post_id' do
   post_id = params[:post_id]
   posts = @db.execute 'select * from Posts where id=?', [post_id]
   @post = posts[0]
   @comments =  @db.execute 'select * from Comments where post_id=? order by created_date', [@post['id']]
+  
+end
+
+after '/details/:post_id' do
   @db.close
+end
+
+get '/details/:post_id' do
   erb :details
 end
 
 post '/details/:post_id' do
   content = params[:content]
   post_id = params[:post_id]
+
+  if content.strip.empty?
+    @error = "Enter commentary text"
+    return erb :details
+  end
+
   @db.execute "insert into Comments
     (
       created_date,
@@ -76,6 +89,5 @@ post '/details/:post_id' do
       ?,
       ?
     )", [content, post_id]
-  @db.close
   redirect to "/details/#{post_id}"
 end
