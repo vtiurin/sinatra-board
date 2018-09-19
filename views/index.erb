@@ -1,12 +1,15 @@
 <h1>Latest posts:</h1>
 <% @posts.each do |post| %>
+    <h2><%= post['title'] %></h2>
+    <p style="font-size: 75%">
+        Author: <%= post['author']%><br>
+        Added at <%= post['created_date'] %>
+        </p>
     <p><%= post['content'] %></p>
-    <p style="font-size: 75%">Added at <%= post['created_date'] %></p>
     <p >
         <a href="/details/<%= post['id']%>">
             Comments
         </a>
     </p>
-    
 <hr>
 <% end%>

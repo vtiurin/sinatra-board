@@ -42,11 +42,33 @@ end
 
 post '/new' do
   post_content = params[:content]
-  if post_content.strip.empty?
-    @error = 'Enter post text'
-    return erb :new
-  end
-  @db.execute "INSERT INTO Posts (created_date, content) VALUES (datetime('now', 'localtime'), ?)", [post_content]
+  author = params[:author]
+  title = params[:title]
+  # validation
+  # make a hash where key = name of a parameter and value = error message
+  errors = {
+    author: 'Enter your name',
+    title: 'Enter a title',
+    content: 'Enter a post text'
+  }
+  # filter errors hash
+  @error = errors.select { |k, v| params[k] == '' }.values.join ', '
+  return erb :new if @error != ''
+  
+  @db.execute "INSERT INTO Posts
+    (
+      created_date,
+      content,
+      author,
+      title
+    )
+      VALUES
+    (
+      datetime('now','localtime'),
+      ?,
+      ?,
+      ?
+    )", [post_content, author, title]
   @db.close
   redirect to '/'
 end
