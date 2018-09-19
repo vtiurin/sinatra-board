@@ -18,7 +18,9 @@ configure do
   (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     created_date DATE,
-    content TEXT
+    content TEXT,
+    author TEXT,
+    title TEXT
   )'
   @db.execute 'create table if not exists Comments
   (

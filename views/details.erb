@@ -1,6 +1,9 @@
-<h1>Post details:</h1>
+<h1><%= @post['title']%></h1>
+<p style="font-size: 75%">
+    Author: <%= @post['author']%><br>
+    Added at <%= @post['created_date'] %>
+</p>
 <p><%= @post['content'] %></p>
-<p style="font-size: 75%">Added at <%= @post['created_date'] %></p>
 <h2>Comments:</h2>
 <hr>
 <% @comments.each do |comment| %>
